@@ -1,6 +1,8 @@
 const express = require('express')
 const mongoose =require('mongoose')
+const poke =require('./models/poke.js')
 const app = express()
+
 
 app.use(express.urlencoded({extended: true}))
 
@@ -12,13 +14,13 @@ app.get('/pokemon/new', (req, res) => {
 
 
   app.post('/pokemon', (req, res) => {
-    res.send(req.body);
-  })
+    poke.create(req.body).then((createdPoke) => {
+      res.send(createdPoke);
+    });
+  });
   
 
-  mongoose.connect('mongodb://localhost:27017/basiccrud').then(() => {
-    console.log('conneciton with mongo established')
- })
+  mongoose.connect('mongodb://localhost:27017/basiccrud')
 
 
 app.listen(3000, () => {
