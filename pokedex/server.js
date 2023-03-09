@@ -1,39 +1,26 @@
-const express    = require('express');
-const app        = express();
-//  const Pokemon    = require('./models/pokemon.js');
-// const schema = require('./models/schema')
-const mongoose = require('mongoose')
+const express = require('express')
+const mongoose =require('mongoose')
+const app = express()
 
-
-app.use(express.urlencoded({extended:true}))
-
-// app.get('/seed', (req, res)=> {
-// schema.create( Pokemon ).then((data)=> {
-//         res.send(data)
-//     })
-// })
+app.use(express.urlencoded({extended: true}))
 
 
 
-app.get('/pokemon', (req, res) => {
-    res.render('index.ejs', { data: Pokemon });
-  });
+app.get('/pokemon/new', (req, res) => {
+    res.render('new.ejs')
+ })
 
-  app.get('/pokemon/:id', (req, res) => {
-    const pokemon = Pokemon[req.params.id];
-    res.render('show.ejs', { pokemon });
-  });
-
-  app.get('/pokemon/new', (req, res) => {
-    res.render('new.ejs');
-  });
 
   app.post('/pokemon', (req, res) => {
-  });
+    res.send(req.body);
+  })
+  
 
-    
-mongoose.connect('mongodb://localhost:27017/pokemon')
+  mongoose.connect('mongodb://localhost:27017/basiccrud').then(() => {
+    console.log('conneciton with mongo established')
+ })
 
-app.listen(3000, ()=>{
-    console.log('listening');
-});
+
+app.listen(3000, () => {
+   console.log('listening')
+})
