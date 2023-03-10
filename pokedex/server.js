@@ -1,8 +1,11 @@
 const express = require('express')
 const mongoose =require('mongoose')
 const Poke =require('./models/poke.js')
+const methodOverride=require('method-override')
 const app = express();
 
+
+app.use(methodOverride('_method'))
 
 const PokeSeed=require('./models/pokemon.js')
 app.use(express.urlencoded({extended: true}))
@@ -42,6 +45,34 @@ res.render('show.ejs',{
   })
 })
 
+
+app.get('/pokemon/:id/edit', (req, res) => {
+  Poke.findById(req.params.id).then((foundPokemon) => {
+    res.render('edit.ejs', {
+      pokemon:foundPokemon
+    })
+  })
+})
+
+
+app.delete('/pokemon/:id', (req, res) => {
+  Poke.findByIdAndRemove(req.params.id).then(() => {
+    res.redirect('/pokes');
+  });
+});
+
+
+app.put('/pokemon/:id', (req, res) => {
+  if (req.body.readyToEdit === 'on') {
+    req.body.readyToEdit = true
+  } else {
+    req.body.readyToEdit = false
+  }
+
+  Poke.findByIdAndUpdate(req.params.id, req.body, {new:true}).then(() => {
+    res.redirect('/pokes')
+  })
+})
 
 
 
