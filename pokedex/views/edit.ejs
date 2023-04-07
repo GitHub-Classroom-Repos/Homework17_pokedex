@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <h1>Edit Pokemon Page</h1>
+    <form method="POST" action="/pokemon/<%=pokemon._id%>?_method=PUT">
+
+      
+      Name: <input type="text" name="name" value="<%=pokemon.name%>"/>
+      Is Ready To Edit:
+      <input type="checkbox" name="readyToEdit"
+        <% if (pokemon.readyToEdit === true){%>
+          checked
+        <%}%>
+      />
+      <input type="submit" value="edit">
+    </form>
+    </form>
+</body>
+
